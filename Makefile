@@ -1,8 +1,9 @@
+
 CC = gcc
 CFLAGS = -Wall
 AR = ar  
 
-all: StrList libStrList.a Main.o
+all: StrList 
 
 StrList: Main.o libStrList.a
 	$(CC) $(CFLAGS) -o $@ $^
@@ -17,3 +18,17 @@ Main.o: Main.c StrList.h
 
 clean:  
 	rm -f *.o *.a StrList
+
+# all:StrList
+
+# StrList: Main.o StrList.o
+# 	gcc -Wall Main.o StrList.o -o StrList
+# main.o: Main.c StrList.h
+# 	gcc -Wall -c Main.c
+# StrList.o: StrList.c StrList.h
+# 	gcc -Wall -c StrList.c
+
+# .PHONY: clean all
+
+# clean:
+# 	rm *.o StrList

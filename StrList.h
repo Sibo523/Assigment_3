@@ -16,9 +16,15 @@
 /*
  * StrList represents a StrList data structure.
  */
-struct _StrList;
-typedef struct _StrList StrList;
+typedef struct _Node {
+    char* value;
+    struct _Node* next;
+} Node;
 
+typedef struct _StrList {
+    struct _Node* head;
+    int size; 
+} StrList;
 /*
  * Allocates a new empty StrList.
  * It's the user responsibility to free it with StrList_free.
