@@ -193,6 +193,22 @@ void StrList_removeAt(StrList* StrList, int index){
     }
 }
 
+int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
+    Node* cur_1 = StrList1->head;
+    Node* cur_2 = StrList1->head;
+    while (cur_1 != NULL || cur_2 != NULL){
+        if (strcmp(cur_1->value,cur_2->value) != 0){
+            return 0;
+        }
+        cur_1 = cur_1->next;
+        cur_2 = cur_2->next;
+    }
+    if (cur_1 != NULL ^ cur_2 != NULL){
+        return 0;
+    }
+    return 1;
+}
+
 char* str_clone(const char* str) {
     return str ? strdup(str) : NULL;
 }
