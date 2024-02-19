@@ -240,13 +240,12 @@ void StrList_reverse( StrList* StrList){
 int compare_strings(const void* a, const void* b) {
     char* str1 = *(char**)a; // Cast to char*
     char* str2 = *(char**)b; // Cast to char*
-    return strcmp(str1, str2);
+    return strcmp(str1,str2);
 }
 
-
-void StrList_sort(StrList* list) { // doesn't work
-    if (list->size == 0) {
-        return; // Empty list, nothing to sort
+void StrList_sort(StrList* list) {
+    if (list == NULL || list->size ==  0) {
+        return; // Empty list or invalid list, nothing to sort
     }
 
     // Allocate an array to hold the string values
@@ -258,8 +257,8 @@ void StrList_sort(StrList* list) { // doesn't work
 
     // Populate the array with string pointers from the list nodes
     Node* current = list->head;
-    int i = 0;
-    while (current) {
+    int i =  0;
+    while (current != NULL) {
         values[i++] = current->value;
         current = current->next;
     }
@@ -269,14 +268,18 @@ void StrList_sort(StrList* list) { // doesn't work
 
     // Update the list nodes with the sorted values
     current = list->head;
-    i = 0;
-    while (current) {
-        current->value = values[i++];
+    i =  0;
+    while (current != NULL) {
+        printf("Sorted string: %s\n", values[i]);
+        // Copy the sorted string into the node's value field
+        current->value = strdup(values[i]);
         current = current->next;
+        i++;
     }
-
+    
     free(values); // Free the temporary array
 }
+
 
 
 
