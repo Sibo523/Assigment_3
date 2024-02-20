@@ -203,7 +203,7 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
         cur_1 = cur_1->next;
         cur_2 = cur_2->next;
     }
-    if (cur_1 != NULL ^ cur_2 != NULL){
+    if ((cur_1 != NULL )^ (cur_2 != NULL)){
         return 0;
     }
     return 1;
