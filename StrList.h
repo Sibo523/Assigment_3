@@ -16,6 +16,8 @@
 /*
  * StrList represents a StrList data structure.
  */
+
+
 typedef struct _Node {
     char* value;
     struct _Node* next;
@@ -25,6 +27,7 @@ typedef struct _StrList {
     struct _Node* head;
     int size; 
 } StrList;
+// StrList* buildList(char*,int);
 /*
  * Allocates a new empty StrList.
  * It's the user responsibility to free it with StrList_free.

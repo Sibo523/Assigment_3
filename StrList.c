@@ -13,6 +13,7 @@
 //     int size; 
 // } StrList;
 
+
 StrList* StrList_alloc() {
     StrList* newList = (StrList*)malloc(sizeof(StrList));  // Allocate memory for the entire structure
     if (newList == NULL) {
@@ -29,18 +30,16 @@ StrList* StrList_alloc() {
 
 }
 void StrList_free(StrList* list) {
-    Node *current = list->head;
+    Node* current = list->head;
     Node* next;
 
     while (current != NULL) {
-        next=current->next;
-        free(current->value);
+        next = current->next;
         free(current);
         current = next;
     }
-    free(list);
+    list->head = NULL;
 }
-
 size_t StrList_size(const StrList* StrList){
     return StrList->size; // W 
 }
@@ -52,7 +51,11 @@ void StrList_insertLast(StrList* StrList, const char* data) {
         fprintf(stderr, "Unable to allocate memory for new node\n");
         exit(-1); // Or handle the error as appropriate for your program
     }
-
+    if (StrList->head == NULL){
+        newNode->value = strdup(data);
+        StrList->head =  newNode;
+        return;
+    }
     // Create a copy of the string
     newNode->value = strdup(data);
     if (newNode->value == NULL) {
@@ -111,9 +114,10 @@ char* StrList_firstData(const StrList* StrList){
 void StrList_print(const StrList* StrList){
     Node *current = StrList->head;
     while(current != NULL){
-        printf("%s\n",current->value);
+        printf("%s ",current->value);
         current = current->next;
     }
+    printf("\n");
 }
 
 void StrList_printAt(const StrList* Strlist,int index){
@@ -121,7 +125,7 @@ void StrList_printAt(const StrList* Strlist,int index){
     for(int i = 0; i < index;i++){
         current = current->next;
     }
-    printf("%s",current->value);
+    printf("%s\n",current->value);
 }
 
 int StrList_printLen(const StrList* Strlist){
@@ -286,7 +290,7 @@ void StrList_sort(StrList* list) {
     current = list->head;
     i =  0;
     while (current != NULL) {
-        printf("Sorted string: %s\n", values[i]);
+        // printf("Sorted string: %s\n", values[i]);
         // Copy the sorted string into the node's value field
         current->value = strdup(values[i]);
         current = current->next;
@@ -302,11 +306,37 @@ void StrList_sort(StrList* list) {
 int StrList_isSorted(StrList* StrList){
     Node *current = StrList->head;
     while (current->next != NULL){
-        if(!strcmp(current->value,current->next->value)){
+        if(strcmp(current->value,current->next->value)>0){
             return 0;
         }
         current = current->next;
     }
     return 1;
 }
+// StrList* buildList( char* str,int length){
+//     StrList* List;
+//     int count = 0;
+//     int j = 0;
+//     char* substring;
 
+//     for (int i = 0; i < length; i++)
+//     {
+//         while (str[j] != ' ' && j < strlen(str))
+//         {
+//             count++;
+//             j++;
+//         }
+        
+//         substring = (char*)malloc(count+1);
+//         strncpy(substring, str, count);
+        
+//         StrList_insertLast(List, substring);
+        
+//         j++;
+//         count = 0;
+//         str += j;
+//         j = 0;
+//         free(substring);
+//     }
+    
+// }
