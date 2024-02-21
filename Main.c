@@ -190,7 +190,7 @@ int main() {
             scanf("%d", &temp);
             list->size = temp;
             for (int i = 0; i < temp; i++) {
-                char *data = (char *)malloc(sizeof(char) * 21);
+                char *data = (char *)malloc(sizeof(char) * 100);
                 scanf("%s", data);
                 StrList_insertLast(list, data);
             }

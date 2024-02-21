@@ -41,7 +41,13 @@ void StrList_free(StrList* list) {
     list->head = NULL;
 }
 size_t StrList_size(const StrList* StrList){
-    return StrList->size; // W 
+    Node* cur = StrList->head;
+    int count = 0;
+    while(cur != NULL){
+        count++;
+        cur = cur->next;
+    }
+    return count; // W 
 }
 
 
@@ -175,6 +181,9 @@ void StrList_remove(StrList* StrList, const char* data){ // need to do
     }
 }
 void StrList_removeAt(StrList* StrList, int index){
+    if (StrList == NULL || StrList->head == NULL){
+        return;
+    }
     Node* current = StrList->head;
     
     if (index == 0){
@@ -187,6 +196,12 @@ void StrList_removeAt(StrList* StrList, int index){
         for (int i = 0; i < index-1; i++)
         {
             current = current->next;
+            if (current == NULL){
+                return;
+            }
+        }
+        if(current->next == NULL){
+            return;
         }
         Node* temp = current->next->next;
         // prev = current;
@@ -198,9 +213,17 @@ void StrList_removeAt(StrList* StrList, int index){
 }
 
 int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
+    if (((StrList1 == NULL) && (StrList2 == NULL)) || ((StrList1->head == NULL) &&(StrList2->head == NULL))){
+        return 1;
+    }
+    if (((StrList1 == NULL) ^ (StrList2 == NULL)) || ((StrList1->head == NULL) ^ (StrList2 == NULL))){
+        return 0;
+    }
     Node* cur_1 = StrList1->head;
-    Node* cur_2 = StrList1->head;
+    Node* cur_2 = StrList2->head;
+
     while (cur_1 != NULL || cur_2 != NULL){
+
         if (strcmp(cur_1->value,cur_2->value) != 0){
             return 0;
         }
@@ -242,6 +265,9 @@ StrList* StrList_clone(const StrList* original) {
 }
 
 void StrList_reverse( StrList* StrList){
+    if (StrList == NULL || StrList->head == NULL){
+        return;
+    }
     Node* current = StrList->head->next;
     Node* perv = StrList -> head;
     perv->next = NULL;// base 
@@ -264,9 +290,10 @@ int compare_strings(const void* a, const void* b) {
 }
 
 void StrList_sort(StrList* list) {
-    if (list == NULL || list->size ==  0) {
+    if (list == NULL || list->head == NULL) {
         return; // Empty list or invalid list, nothing to sort
     }
+    
 
     // Allocate an array to hold the string values
     char** values = malloc(list->size * sizeof(char*));
@@ -274,7 +301,7 @@ void StrList_sort(StrList* list) {
         // Handle memory allocation failure
         return;
     }
-
+    
     // Populate the array with string pointers from the list nodes
     Node* current = list->head;
     int i =  0;
@@ -282,21 +309,19 @@ void StrList_sort(StrList* list) {
         values[i++] = current->value;
         current = current->next;
     }
+    int size = StrList_size(list);
 
     // Use qsort to sort the array of string pointers
-    qsort(values, list->size, sizeof(char*), compare_strings);
-
+    qsort(values, size, sizeof(char*), compare_strings);
+    
     // Update the list nodes with the sorted values
     current = list->head;
     i =  0;
     while (current != NULL) {
-        // printf("Sorted string: %s\n", values[i]);
-        // Copy the sorted string into the node's value field
-        current->value = strdup(values[i]);
+        current->value = values[i];
         current = current->next;
         i++;
     }
-    
     free(values); // Free the temporary array
 }
 
