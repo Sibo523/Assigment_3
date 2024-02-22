@@ -3,17 +3,6 @@
 #include <string.h>
 #include "StrList.h"
 
-// typedef struct _Node {
-//     char* value;
-//     struct _Node* next;
-// } Node;
-
-// typedef struct _StrList {
-//     struct _Node* head;
-//     int size; 
-// } StrList;
-
-
 StrList* StrList_alloc() {
     StrList* newList = (StrList*)malloc(sizeof(StrList));  // Allocate memory for the entire structure
     if (newList == NULL) {
@@ -34,12 +23,16 @@ void StrList_free(StrList* list) {
     Node* next;
 
     while (current != NULL) {
-        next = current->next;
-        free(current);
-        current = next;
+        next = current->next; // Save the next node before freeing the current
+        free(current->value); // Free the data if it was dynamically allocated
+        free(current); // Then free the node itself
+        current = next; // Move to the next node
     }
-    list->head = NULL;
+
+    list->head = NULL; // Set the head to NULL after freeing all nodes
+    list->size =  0; // Reset the size to  0
 }
+
 size_t StrList_size(const StrList* StrList){
     Node* cur = StrList->head;
     int count = 0;
@@ -85,10 +78,6 @@ void StrList_insertLast(StrList* StrList, const char* data) {
 }
 
 void StrList_insertAt(StrList* StrList, const char* data, int index) {
-    // if (index < 0 || index >= StrList->size) {
-    //     // Handle invalid index (e.g., print error message or return)
-    //     return;
-    // }
 
     Node* current = StrList->head;
     for (int i = 0; i < index-1; ++i) {
@@ -118,12 +107,15 @@ char* StrList_firstData(const StrList* StrList){
 }
 
 void StrList_print(const StrList* StrList){
+    if (StrList == NULL||StrList->head == NULL){
+        return;
+    }
     Node *current = StrList->head;
-    while(current != NULL){
+    while(current->next != NULL){
         printf("%s ",current->value);
         current = current->next;
     }
-    printf("\n");
+    printf("%s\n",current->value);
 }
 
 void StrList_printAt(const StrList* Strlist,int index){

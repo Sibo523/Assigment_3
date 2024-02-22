@@ -215,8 +215,8 @@ int main() {
         } else if (number == 7) {
             char *data = (char *)malloc(sizeof(char) * 100);
             scanf("%s", data);
-           int y=  StrList_count(list, data);
-           printf("%d\n",y);
+            int y=  StrList_count(list, data);
+            printf("%d\n",y);
             free(data);
         } else if (number == 8) {
             char *data = (char *)malloc(sizeof(char) * 100);
@@ -236,9 +236,9 @@ int main() {
             StrList_sort(list);
         } else if (number == 13) {
             if (StrList_isSorted(list)) {
-                printf("true \n");
+                printf("true\n");
             } else {
-                printf("false \n");
+                printf("false\n");
             }
             // int i =StrList_isSorted(list);
             // printf("%d",i);
