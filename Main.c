@@ -193,6 +193,7 @@ int main() {
                 char *data = (char *)malloc(sizeof(char) * 100);
                 scanf("%s", data);
                 StrList_insertLast(list, data);
+                free(data);
             }
         } else if (number == 2) {
             int temp = 0;
@@ -200,9 +201,9 @@ int main() {
             char *data = (char *)malloc(sizeof(char) * 100);
             scanf("%s", data);
             StrList_insertAt(list, data, temp);
+            free(data);
         } else if (number == 3) {
             StrList_print(list);
-        
         } else if (number == 4) {
            printf( "%d\n",(int)StrList_size(list));
         } else if (number == 5) {
@@ -245,6 +246,8 @@ int main() {
         }
         scanf("%d", &number); // Read next number for the next iteration
     }
+    StrList_free(list);
+
     free(list);
     return 0;
 }

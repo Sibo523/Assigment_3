@@ -46,20 +46,22 @@ size_t StrList_size(const StrList* StrList){
 
 void StrList_insertLast(StrList* StrList, const char* data) {
     Node* newNode = (Node*)malloc(sizeof(Node)); // Corrected allocation size
+    newNode->value = (char*)malloc(sizeof(char)*strlen(data) + sizeof(char));
     if (newNode == NULL) {
         fprintf(stderr, "Unable to allocate memory for new node\n");
         exit(-1); // Or handle the error as appropriate for your program
     }
     if (StrList->head == NULL){
-        newNode->value = strdup(data);
+        strcpy(newNode->value ,data);
         StrList->head =  newNode;
         return;
     }
     // Create a copy of the string
-    newNode->value = strdup(data);
+    strcpy(newNode->value,data);
+    // newNode->value = strdup(data);
     if (newNode->value == NULL) {
         fprintf(stderr, "Unable to allocate memory for new node's value\n");
-        free(newNode); // Free the node memory
+        // free(newNode); // Free the node memory
         exit(-1); // Or handle the error as appropriate for your program
     }
 
@@ -78,7 +80,6 @@ void StrList_insertLast(StrList* StrList, const char* data) {
 }
 
 void StrList_insertAt(StrList* StrList, const char* data, int index) {
-
     Node* current = StrList->head;
     for (int i = 0; i < index-1; ++i) {
         current = current->next;
